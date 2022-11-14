@@ -1,0 +1,32 @@
+.productList
+    margin-top: 50px
+    display: grid
+    grid-template-columns: 446px 446px 446px
+    grid-template-rows: repeat(2, 530px)
+    row-gap: 50px
+    column-gap: 50px
+    margin-bottom: 50px
+    &__item
+        transition: margin 0.1s
+        border-radius: 10px
+        &:hover
+            box-shadow: 0 1px 10px 3px rgba(0, 0, 0, .1)  
+            margin-top: -5px
+        &-img
+            object-fit: unset
+            padding-top: 35px
+            padding-left: 35px
+            width: 410px
+            height: 430px
+        &-descr 
+            display: grid
+            padding-top: 10px
+            grid-template-rows: auto auto
+            row-gap: 5px
+            padding-left: 35px
+            width: 410px
+        &-title
+            font-size: 22px
+        &-price
+            font-size: 18px
+
