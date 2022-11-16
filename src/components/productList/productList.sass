@@ -9,15 +9,19 @@
     &__item
         transition: margin 0.1s
         border-radius: 10px
+        z-index: 10
         &:hover
             box-shadow: 0 1px 10px 3px rgba(0, 0, 0, .1)  
             margin-top: -5px
+        &-missing
+            opacity: 0.4
         &-img
             object-fit: unset
             padding-top: 35px
             padding-left: 35px
             width: 410px
             height: 430px
+            z-index: 12
         &-descr 
             display: grid
             padding-top: 10px

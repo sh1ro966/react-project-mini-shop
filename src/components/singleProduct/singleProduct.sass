@@ -1,0 +1,50 @@
+.singleProduct
+    margin-top: 50px
+    &__sideImages
+        display: inline-block
+        img
+            border-radius: 10px
+            margin-bottom: 10px
+            display: block
+            width: 250px
+            height: 250px
+    &__carousel
+        display: inline-block
+        border-radius: 10px
+        margin-left: 50px
+        margin-bottom: 70px
+        width: 600px
+        height: 620px 
+        position: relative
+        &-item
+            position: absolute
+            inset: 0
+            img
+                border-radius: 10px
+                display: block
+                width: 600px
+                height: 620px 
+        &-button
+            position: absolute
+            background: none
+            border: none
+            font-size: 50px
+            line-height: 15px
+            top: 50%
+            padding-bottom: 11px
+            padding-right: 4px
+            transform: translateY(-50%)
+            z-index: 2
+            color: rgba(255, 255, 255, .5)
+            width: 40px
+            height: 40px
+            cursor: pointer
+            border-radius: 50%
+            background-color: rgba(0,0,0, .1)
+            &:hover, &:focus
+                background-color: rgba(0,0,0, .2)
+                color: #fff
+            &.prev
+                left: 16px
+            &.next
+                right: 16px
