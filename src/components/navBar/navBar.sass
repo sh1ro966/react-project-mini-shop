@@ -4,7 +4,7 @@
         margin: 0 auto
         display: grid
         width: 1500px
-        grid-template-columns: 100px 1300px 40px 60px
+        grid-template-columns: 100px 1200px 140px 60px
         height: 100px
     &__types
         display: grid 
@@ -34,6 +34,7 @@
     &__currency
         z-index: 15
         margin-top: 37px
+        margin-left: 100px
         &-content
             display: none
             padding: 0
@@ -79,6 +80,105 @@
             height: 20px
             border-radius: 50%
             background-color: black
+    a
+        color: black
+        text-decoration: none
+
+.miniCart
+    position: absolute
+    width: 420px
+    height: 800px
+    box-shadow: 0 1px 10px 3px rgba(0, 0, 0, .1)  
+    top: 80px
+    display: none
+    background-color: #fff
+    z-index: 20
+    right: 0px
+    &__button
+        &-cart
+            width: 150px
+            height: 40px
+            margin-top: 50px
+            margin-left: 50px
+            background-color: #E4E1E1
+            border-radius: 10px
+            cursor: pointer
+            font-weight: 500
+            border: none
+            font-size: 20px
+        &-check
+            margin-left: 20px
+            margin-top: 30px
+            width: 150px
+            height: 40px
+            border: none
+            background-color: #E4E1E1
+            border-radius: 10px
+            font-size: 20px
+            font-weight: 500
+            cursor: pointer
+    &__products
+        height: 660px
+        overflow-y: scroll
+        &-item 
+            position: relative
+            margin: 0 auto
+            width: 400px
+            height: 300px
+            &-img
+                display: block
+                margin-left: 49%
+                margin-top: -200px
+                margin-bottom: 10px
+                width: 200px
+                height: 200px
+                object-fit: cover
+                border-radius: 10px
+                img
+                    width: 350px
+                    height: 300px
+                    border-radius: 10px
+            &-title
+                display: inline-block
+                margin-left: 5px
+                width: 200px
+                height: 70px
+                font-size: 20px
+                font-weight: 500
+            &-price
+                margin-left: 5px
+                display: inline-block
+                width: 200px
+                height: 60px
+                font-size: 18px
+            &-size
+                font-size: 18px
+                margin-left: 5px
+                height: 40px
+            &-quantityMinus
+                display: inline-block
+                margin-left: 15px
+                width: 20px
+                font-size: 30px
+                cursor: pointer
+                background-color: #fff
+                border: none
+            &-quantityPlus
+                display: inline-block
+                width: 20px
+                font-size: 30px
+                cursor: pointer
+                background-color: #fff
+                border: none
+            &-quantityNum
+                display: inline-block
+                width: 30px
+                text-align: center
+                margin-right: 5px
+                margin-left: 10px
+                font-size: 30px
+
 
 .show
     display: block
+    

@@ -3,7 +3,8 @@ import { gql } from '@apollo/client';
   const GET_PRODUCTS = gql`
 query GetProducts {
   products {
-    id
+    id,
+    slug,
     title,
     quantity,
     price,
