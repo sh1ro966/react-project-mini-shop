@@ -52,19 +52,18 @@ class Cart extends Component {
       return count;
     };
     const RenderItems = (arr) => {
-      const { currency } = this.state;
       const items = arr.map((item) => {
         return (
           <div className="cart__products-item" key={item.id}>
             <div className="cart__products-item-title">{item.title}</div>
             <div className="cart__products-item-price">
-              {currency === "$"
+              {this.props.currency === "$"
                 ? `$ ${item.price}`
-                : currency === "€"
+                : this.props.currency === "€"
                 ? `€ ${(item.price * 0.97).toFixed(0)}`
-                : currency === "zł"
+                : this.props.currency === "zł"
                 ? `zł ${(item.price * 4.54).toFixed(0)}`
-                : currency === "₴"
+                : this.props.currency === "₴"
                 ? `₴ ${(item.price * 36.8).toFixed(0)}`
                 : `$ ${item.price}`}
             </div>
@@ -105,7 +104,16 @@ class Cart extends Component {
       <div className="cart">
         <h2 className="cart__title">CART</h2>
         <div className="cart__total">
-          TOTAL: ${countTotal(this.state.total)}
+          TOTAL:
+          {this.props.currency === "$"
+          ? `$ ${countTotal(this.state.total)}`
+          : this.props.currency === "€"
+          ? `€ ${(countTotal(this.state.total) * 0.97).toFixed(0)}`
+          : this.props.currency === "zł"
+          ? `zł ${(countTotal(this.state.total) * 4.54).toFixed(0)}`
+          : this.props.currency === "₴"
+          ? `₴ ${(countTotal(this.state.total) * 36.8).toFixed(0)}`
+          : `$ ${countTotal(this.state.total).price}` }
         </div>
         <button className="cart__checkout">CHECKOUT</button>
         <hr className="cart__hr-first" />
