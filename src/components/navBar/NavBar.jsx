@@ -1,9 +1,11 @@
 import { Component } from 'react';
 import { createRef } from 'react';
 import { request } from 'graphql-request';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import GET_PRODUCTS from '../../server/getProducts';
+import GET_PRODUCTS from '../../graphql/getProducts';
+import DELETE_ITEM from '../../graphql/deleteItem';
+import GET_CART from "../../graphql/getCart";
 
 import './navBar.sass';
 
@@ -14,16 +16,22 @@ class NavBar extends Component {
         this.cartRef = createRef();
         this.state = {
            productsFiltered: [],
-           currency: ``,
-           productsCart: []
+           currency: '$',
+           cartItems: null,
         }
     }
 
     componentDidMount() {
         this.filterProducts();
-        this.setState({currency: '$'})
+        this.setState({cartItems: this.props.cartItems});
     }
 
+    componentDidUpdate(prevState, prevProps) {
+        if (prevProps.cartItems !== this.props.cartItems) {
+            this.setState({cartItems: this.props.cartItems});
+        }
+    }
+    
     onCurrencyModal = () => {
         const curRef = this.currencyRef.current;
         curRef.classList.toggle('show');
@@ -62,11 +70,50 @@ class NavBar extends Component {
         data => this.setState({productsFiltered: data.products.filter(i => i.category[0].categoryTitle)}, () => {this.props.filteredData(this.state.productsFiltered);}));
     }
 
+    onDeleteItem = (id) => {
+        request('https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/clagsd8q200sb01uk9785hs2l/master', DELETE_ITEM(id))
+        .then(() => this.onGetCart())
+        .then(() => this.props.setCartItems(this.state.cartItems));
+    }
+
+    onGetCart = () => {
+        request('https://api-eu-central-1-shared-euc1-02.hygraph.com/v2/clagsd8q200sb01uk9785hs2l/master', GET_CART)
+        .then(data => this.setState({cartItems: data.carts}));
+    }
+
     render() {
+        const RenderItems = (arr) => { //  сейчас при получении данных они пушатся в стейт, я дуамю что мне это не надо т.к они удалятся оттуда при перезагрузке страницы, надо придумать как запихнуть данные из апишки в корзину
+            const { currency } = this.state;
+            const items = arr.map((item) => {
+              return (
+                <div className="miniCart__products_item" key={item.id}>
+                   <div className="miniCart__products-item-title">{item.title}</div>
+                   <div className="miniCart__products-item-price">
+                { currency === '$' ? `$ ${item.price}` : 
+                currency === '€' ? `€ ${(item.price * 0.97).toFixed(0)}` : 
+                currency === 'zł' ? `zł ${(item.price * 4.54).toFixed(0)}` :
+                currency === '₴' ? `₴ ${(item.price * 36.80).toFixed(0)}` : `$ ${item.price}` }
+                    </div>
+                <div className="miniCart__products-item-size">Size: {item.size}</div>
+                    <div className="miniCart__products-item-quantity">
+                        <div className="miniCart__products-item-quantity-text">Quantity: </div>
+                        <div className="miniCart__products-item-quantity-number">{item.quantity}</div>
+                        <img className="miniCart__products-item-trash" src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png" onClick={() => this.onDeleteItem(item.id)} alt="trash" />
+                    </div>
+                <img className="miniCart__products-item-img" src={item.mainImage} alt={item.title} />  
+            <hr></hr>  
+                </div>
+              );
+            });
+            return <div className="miniCart__products">
+            {items}
+        </div>;
+          }
+          const render = !this.state.cartItems ? <div className="miniCart__empty">Cart is empty</div> : this.state.cartItems.length === 0 ? <div className="miniCart__empty">Cart is empty</div> : RenderItems(this.state.cartItems); 
         return (
             <>
             <nav className="navBar">
-                <div className="navBar__wrapper">
+        <div className="navBar__wrapper">
                     <Link to="/">
                     <img className="navBar__icon" src="https://cdn-icons-png.flaticon.com/128/2898/2898372.png" alt="shop-icon" />
                     </Link>
@@ -89,22 +136,9 @@ class NavBar extends Component {
                     </div>
                         <div className="navBar__cart" >
                             <img className="navBar__cart-img" src="https://cdn-icons-png.flaticon.com/512/2838/2838895.png" alt="shop-cart" onClick={this.onCartModal} />
-                            <div className="navBar__cart-quantity">1</div>
+                            {!this.state.cartItems ? null : this.state.cartItems.length === 0 ? null : <div className="navBar__cart-quantity">{this.state.cartItems.length}</div>}
                                 <div ref={this.cartRef} className="miniCart">
-                                    <div className="miniCart__products">
-                                        {/* <div className="miniCart__products_item">
-                                            <div className="miniCart__products-item-title">NIKE OG CAP VINTAGE ORIGINAL</div>
-                                            <div className="miniCart__products-item-price">$ 231</div>
-                                            <div className="miniCart__products-item-size">Size: S</div>
-                                                <div className="miniCart__products-item-quantity">
-                                                        <button className="miniCart__products-item-quantityMinus">-</button>
-                                                        <div className="miniCart__products-item-quantityNum">1</div>
-                                                        <button className="miniCart__products-item-quantityPlus">+</button>
-                                                </div>
-                                            <img className="miniCart__products-item-img" src="https://media.graphassets.com/hZzKwyFbQ7K1RAxfq49Z" alt="" />  
-                                        <hr></hr>  
-                                        </div>     */}
-                                    </div>
+                                    {render}
                                         <Link to="/cart">
                                             <button className="miniCart__button-cart" onClick={this.onCartModal}>GO TO CART</button>
                                         </Link>
@@ -121,3 +155,4 @@ class NavBar extends Component {
 }
 
 export default NavBar;
+

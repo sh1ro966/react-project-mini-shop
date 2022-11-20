@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-  const GET_SINGLE_PRODUCT = (slug) => gql`
+const GET_SINGLE_PRODUCT = (slug) => gql`
 query GetProducts {
     product(where: {slug: "${slug}"}) {
         id
@@ -20,7 +20,7 @@ query GetProducts {
         category {
           categoryTitle
         }
-      }
+    }
 }
 `;
 

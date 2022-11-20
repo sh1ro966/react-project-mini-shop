@@ -92,8 +92,12 @@
     top: 80px
     display: none
     background-color: #fff
-    z-index: 20
+    z-index: 10
     right: 0px
+    &__empty
+        text-align: center
+        margin-top: 50px
+        font-size: 40px
     &__button
         &-cart
             width: 150px
@@ -155,29 +159,31 @@
                 font-size: 18px
                 margin-left: 5px
                 height: 40px
-            &-quantityMinus
-                display: inline-block
-                margin-left: 15px
+            &-quantity
+                &-number
+                    display: inline-block
+                    width: 30px
+                    text-align: center
+                    margin-right: 5px
+                    margin-left: 10px
+                    font-size: 30px
+                &-text
+                    font-size: 21px
+                    line-height: 30px
+                    display: inline-block
+                    margin-left: 5px
+            &-trash
                 width: 20px
-                font-size: 30px
-                cursor: pointer
-                background-color: #fff
-                border: none
-            &-quantityPlus
-                display: inline-block
-                width: 20px
-                font-size: 30px
-                cursor: pointer
-                background-color: #fff
-                border: none
-            &-quantityNum
-                display: inline-block
-                width: 30px
-                text-align: center
-                margin-right: 5px
-                margin-left: 10px
-                font-size: 30px
-
+                display: inline
+                margin-left: 30px
+                height: 20px
+                transition: all 0.1s
+                img
+                    width: 20px
+                    height: 20px
+                &:hover
+                    width: 22px
+                    height: 22px
 
 .show
     display: block
