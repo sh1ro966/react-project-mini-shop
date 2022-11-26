@@ -111,7 +111,7 @@ class NavBar extends Component {
       DELETE_ITEM(id)
     )
       .then(() => this.onGetCart())
-      .then(() => this.props.setCartItems(this.state.cartItems));
+      .then(() => this.props.setCartItems(null))
   };
 
   onGetCart = () => {
@@ -123,7 +123,6 @@ class NavBar extends Component {
 
   render() {
     const RenderItems = (arr) => {
-      //  сейчас при получении данных они пушатся в стейт, я дуамю что мне это не надо т.к они удалятся оттуда при перезагрузке страницы, надо придумать как запихнуть данные из апишки в корзину
       const { currency } = this.state;
       const items = arr.map((item) => {
         return (
